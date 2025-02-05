@@ -68,7 +68,7 @@ public:
 
     SparseMatrix<TElement> operator+(const SparseMatrix<TElement>& other) const;
     SparseMatrix<TElement> operator*(double scalar) const;
-    SparseMatrix<TElement> operator*(const SparseMatrix<TElement>& other) const;
+    std::unique_ptr<SparseMatrix<TElement>> operator*(const SparseMatrix<TElement>& other) const;
     double norm() const;
     void normalize();
     ArraySequence<IndexPair<int>> Keys() const;
@@ -288,30 +288,31 @@ SparseMatrix<TElement> SparseMatrix<TElement>::operator*(const SparseMatrix<TEle
     {
         throw std::invalid_argument("Incompatible dimensions for matrix multiplication.");
     }
-    
-    SparseMatrix<TElement> result(rows, other.columns); 
+
+    std::unique_ptr<SparseMatrix<TElement>> result = std::make_unique<SparseMatrix<TElement>>(rows, other.columns);
+
     for (auto iterator = elems->begin(); *iterator != *elems->end(); ++(*iterator))
     {
-        const IndexPair<int>& index1 = (**iterator).key;
+        IndexPair<int> index1 = (**iterator).key; // ссылки на индексы 
         for (auto iterator2 = other.elems->begin(); *iterator2 != *other.elems->end(); ++(*iterator2))
         {
-            const IndexPair<int>& index2 = (**iterator2).key;
+            IndexPair<int> index2 = (**iterator2).key;
             if (index1.column == index2.row)
             {
                 IndexPair<int> resultIndex(index1.row, index2.column);
                 TElement newValue = Get(index1) * other.Get(index2);
-                if (result.elems->ContainsKey(resultIndex))
+                if (result->elems->ContainsKey(resultIndex))
                 {
-                    result.elems->Update(resultIndex, result.elems->Get(resultIndex) + newValue);
+                    result->elems->Update(resultIndex, result->elems->Get(resultIndex) + newValue);
                 }
                 else
                 {
-                    result.elems->Add(resultIndex, newValue);
+                    result->elems->Add(resultIndex, newValue);
                 }
             }
         }
     }
-  
+
     return result;
 }
 
