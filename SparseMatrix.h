@@ -239,8 +239,8 @@ SparseMatrix<TElement>& SparseMatrix<TElement>::operator=(SparseMatrix&& other) 
 }
 */
 
-//с мув семантикой
-//сделать репозиторий, с ветками, сравнить время выполнения с ссылками и без. 
+//Г± Г¬ГіГў Г±ГҐГ¬Г Г­ГІГЁГЄГ®Г©
+//Г±Г¤ГҐГ«Г ГІГј Г°ГҐГЇГ®Г§ГЁГІГ®Г°ГЁГ©, Г± ГўГҐГІГЄГ Г¬ГЁ, Г±Г°Г ГўГ­ГЁГІГј ГўГ°ГҐГ¬Гї ГўГ»ГЇГ®Г«Г­ГҐГ­ГЁГї Г± Г±Г±Г»Г«ГЄГ Г¬ГЁ ГЁ ГЎГҐГ§. 
 //
 template <typename TElement>
 SparseMatrix<TElement> SparseMatrix<TElement>::operator+(const SparseMatrix<TElement>& other) const
@@ -312,7 +312,7 @@ SparseMatrix<TElement> SparseMatrix<TElement>::operator*(const SparseMatrix<TEle
         }
     }
   
-    return std::move(result);
+    return result;
 }
 
 
