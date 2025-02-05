@@ -75,9 +75,9 @@ public:
     ArraySequence<std::pair<IndexPair<int>, TElement>> GetItems() const;
 
     //std::unique_ptr<SparseMatrix<TElement>> Mult(const SparseMatrix<TElement>& other) const;
-    //SparseMatrix(SparseMatrix&& other) noexcept;
+    SparseMatrix(SparseMatrix&& other) noexcept;
 
-   // SparseMatrix& operator=(SparseMatrix&& other) noexcept;
+    SparseMatrix& operator=(SparseMatrix&& other) noexcept;
     template <typename TElement>
     friend std::ostream& operator<<(std::ostream& out, const SparseMatrix<TElement>& matrix);
    
@@ -209,7 +209,7 @@ void SparseMatrix<TElement>::Remove(const IndexPair<int>& index)
     }
     elems->Delete(index);
 }
-/*
+
 template <typename TElement>
 SparseMatrix<TElement>::SparseMatrix(SparseMatrix&& other) noexcept : rows(other.rows), columns(other.columns), elems(other.elems) 
 {
@@ -237,7 +237,7 @@ SparseMatrix<TElement>& SparseMatrix<TElement>::operator=(SparseMatrix&& other) 
     }
     return *this;
 }
-*/
+
 
 //ñ ìóâ ñåìàíòèêîé
 //ñäåëàòü ðåïîçèòîðèé, ñ âåòêàìè, ñðàâíèòü âðåìÿ âûïîëíåíèÿ ñ ññûëêàìè è áåç. 
